@@ -565,8 +565,11 @@ function findLongestIncreasingSubsequence(nums) {
  *  propagateItemsByPositionIndex([ 'a', 'b', 'c', null ]) => [ 'a', 'b', 'b', 'c', 'c', 'c',  null, null, null, null ]
  *  propagateItemsByPositionIndex([ 1,2,3,4,5 ]) => [ 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr.reduce((acc, current, index) => {
+    const newArr = Array(index + 1).fill(current);
+    return acc.concat(newArr);
+  }, []);
 }
 
 /**
@@ -582,8 +585,18 @@ function propagateItemsByPositionIndex(/* arr */) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  if (n === 0) {
+    return arr;
+  }
+  if (n > 0) {
+    const lastItem = arr.pop();
+    arr.unshift(lastItem);
+  } else {
+    const firstItem = arr.shift();
+    arr.push(firstItem);
+  }
+  return shiftArray(arr, n > 0 ? n - 1 : n + 1);
 }
 
 /**
@@ -599,8 +612,20 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const numArr = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  return arr.sort((a, b) => numArr.indexOf(a) - numArr.indexOf(b));
 }
 
 /**
@@ -622,8 +647,18 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const midElem = Math.floor(arr.length / 2);
+  const head = arr.slice(0, midElem);
+  let tail = [];
+
+  if (arr.length % 2 === 0) {
+    tail = arr.slice(midElem);
+    return [...tail, ...head];
+  }
+  tail = arr.slice(midElem + 1);
+  const mid = arr[midElem];
+  return [...tail, mid, ...head];
 }
 
 module.exports = {
